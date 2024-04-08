@@ -1,5 +1,8 @@
 https://www.youtube.com/watch?v=8shjc0Lc5xM&t=643s
 
+
+https://github.com/aloha202/laravel9_inertia_vue_crud
+
 laravel new HQ_tailwind
     jetstream
     inertia

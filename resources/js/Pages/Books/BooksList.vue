@@ -1,9 +1,41 @@
 <script>
-import AppLayout from '@/Layouts/AppLayout.vue';
+    import AppLayout from '@/Layouts/AppLayout.vue';
+    import Pagination from '@/Components/Pagination.vue';
+    import BookForm from '@/Components/Books/form.vue';
+
+    const defaultFormObject = {
+        title: null, author: null, image: null
+    };
+
     export default{
         props: ['data'],
         components: {
-            AppLayout
+            AppLayout, Pagination, BookForm
+        },
+        data() {
+            return {
+                isFormOpen: false,
+                isFormEdit: false,
+                formObject: defaultFormObject
+            }
+        },
+        methods: {
+            saveItem(item) {
+                console.log(item);
+            },
+            closeModal() {
+                this.isFormOpen = false;
+            },
+            openForm(item){
+                this.isFormOpen = true;
+                this.isFormEdit = !!item;
+
+                //this.formObject =  item ? item : defaultFormObject;
+                this.formObject = {...defaultFormObject,...item};
+            },
+            deleteItem(item) {
+                console.log(`delete: ` + item.id);
+            }
         }
     }
 </script>
@@ -20,7 +52,8 @@ import AppLayout from '@/Layouts/AppLayout.vue';
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
 
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Create</button>
+                    <button @click="openForm()" 
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Create</button>
 
                     <!-- table -->
                     <table class="table-fixed w-full posts-table">
@@ -40,12 +73,22 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                                 <td class="px-4 py-2 border">{{ item.author }}</td>
                                 <td class="px-4 py-2 border"><!-- image --></td>
                                 <td class="px-4 py-2">
-                                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-                                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                                    <button @click="openForm(item)" 
+                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
+                                    <button @click="deleteForm(item)"
+                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+
+                    <pagination :links="data.links" ></pagination>
+
+                    <book-form :isOpen="isFormOpen" 
+                               :isEdit="isFormEdit" 
+                               :form="formObject" 
+                               @formsave="saveItem" 
+                               @formclose="closeModal"></book-form>
 
                 </div>
             </div>
