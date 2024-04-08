@@ -4,4 +4,12 @@ laravel new HQ_tailwind
     jetstream
     inertia
 
+echo "# HQ_tailwind" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/KovacsZoltan65/HQ_tailwind.git
+git push -u origin main
+
 php artisan make:model Book --all
