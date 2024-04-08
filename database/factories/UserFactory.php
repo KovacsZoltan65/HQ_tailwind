@@ -13,7 +13,7 @@ use Laravel\Jetstream\Features;
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
 class UserFactory extends Factory
-{
+{   
     /**
      * The current password being used by the factory.
      */
@@ -38,7 +38,7 @@ class UserFactory extends Factory
             'current_team_id' => null,
         ];
     }
-
+    
     /**
      * Indicate that the model's email address should be unverified.
      */

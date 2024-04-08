@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Database\Factories\BookFactory;
+use App\Models\Book;
 use Illuminate\Database\Seeder;
 
 class BookSeeder extends Seeder
@@ -12,7 +12,24 @@ class BookSeeder extends Seeder
      */
     public function run(): void
     {
-        $fact = new BookFactory();
-        $fact->count(1000)->create();
+        \DB::table('books')->truncate();
+        
+        $this->command->warn(PHP_EOL . 'Creatung books...');
+        
+        $count = 1000;
+        
+        $this->command->getOutput()->progressStart($count);
+        
+        for( $i = 0; $i < $count; $i++ ) {
+            Book::factory(1)->create();
+            $this->command->getOutput()->progressAdvance();
+        }
+        
+        $this->command->getOutput()->progressFinish();
+        
+        $this->command->info(PHP_EOL . 'Books created');
+        
+        //$fact = new BookFactory();
+        //$fact->count(1000)->create();
     }
 }
