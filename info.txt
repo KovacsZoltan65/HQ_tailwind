@@ -1,0 +1,7 @@
+https://www.youtube.com/watch?v=8shjc0Lc5xM&t=643s
+
+laravel new HQ_tailwind
+    jetstream
+    inertia
+
+php artisan make:model Book --all
