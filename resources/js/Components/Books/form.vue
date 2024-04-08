@@ -30,6 +30,9 @@ export default {
                                 <input type="text" id="formBookTitle" v-model="form.title"  
                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                                        placeholder="Enter Title"/>
+
+                                <div v-if="$page.props.errors.title" 
+                                     class="text-red-500">{{ $page.props.errors.title }}</div>
                             </div>
 
                             <!-- Author -->
@@ -39,6 +42,9 @@ export default {
                                 <input type="text" id="formBookAuthor" v-model="form.author" 
                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                                        placeholder="Enter Author"/>
+
+                                <div v-if="$page.props.errors.author" 
+                                     class="text-red-500">{{ $page.props.errors.author }}</div>
                             </div>
 
                             <!-- Image -->
@@ -57,30 +63,35 @@ export default {
                         
                         <!-- Save Button -->
                         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                            <button type="button" v-show="!isEdit" @click="$emit('formsave', form)" 
-                                    class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
-                                Save
-                            </button>
+                            <button  type="button"
+                                    v-show="!isEdit"
+                                    @click="$emit('formsave', form)"
+                                    class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                            Save
+                          </button>
                         </span>
 
                         <!-- Update Button -->
                         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                            <button type="button" v-show="isEdit" @click="$emit('formsave', form)" 
-                                    class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
-                                Update
-                            </button>
+                            <button  type="button"
+                                    v-show="isEdit"
+                                    @click="$emit('formsave', form)"
+                                    class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                            Update
+                          </button>
                         </span>
 
                         <!-- Cancel Button -->
-                        <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                            <button type="button" @click="$emit('formclose')"
-                                    class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+                            <button type="button"
+                                    @click="$emit('formclose')"
+                                    class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
                                 Cancel
                             </button>
                         </span>
 
                     </div>
-                </form>>
+                </form>
 
             </div>
 

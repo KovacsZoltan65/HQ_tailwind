@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
+use App\Models\Book;
+use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
 
 class BookController extends Controller
 {
@@ -15,7 +17,7 @@ class BookController extends Controller
     {
         $data = Book::query()->paginate(20);
         
-        return \Inertia\Inertia::render('Books/BooksList', [
+        return Inertia::render('Books/BooksList', [
             'data' => $data
         ]);
     }
@@ -23,48 +25,55 @@ class BookController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBookRequest $request)
-    {
-        //
+    public function store(StoreBookRequest $request) {
+        Validator::make($request->all(), [
+            'title' => 'required',
+            'author' => 'required',
+        ])->validate();
+        
+        Book::create($request->all());
+        
+        return redirect()->back()
+            ->with('message', 'Book created');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Book $book)
-    {
-        //
-    }
+    public function show(Book $book) {}
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Book $book)
-    {
-        //
-    }
+    public function edit(Book $book) {}
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBookRequest $request, Book $book)
-    {
-        //
+    public function update(UpdateBookRequest $request, Book $book) {
+        Validator::make($request->all(), [
+            'title' => 'required',
+            'author' => 'required',
+        ])->validate();
+        
+        $book->update($request->all());
+        
+        return redirect()->back()
+                ->with('message', 'Book updated');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Book $book)
-    {
-        //
+    public function destroy(Book $book) {
+        $book->delete();
+        
+        return redirect()->back()
+            ->with('message', 'Book deleted');
     }
 }

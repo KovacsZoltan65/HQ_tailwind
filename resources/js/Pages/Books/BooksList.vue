@@ -21,7 +21,19 @@
         },
         methods: {
             saveItem(item) {
-                console.log(item);
+                let url = '/books';
+
+                if( item.id ) {
+                    url = '/books/' + item.id;
+                    item._method = 'PUT';
+                }
+
+                this.$inertia.post(url, item, {
+                    onError: (e) => {},
+                    onSuccess: (e) => {
+                        this.closeModal();
+                    }
+                });
             },
             closeModal() {
                 this.isFormOpen = false;
@@ -32,9 +44,15 @@
 
                 //this.formObject =  item ? item : defaultFormObject;
                 this.formObject = {...defaultFormObject,...item};
+
+                this.$page.props.errors = {};
             },
             deleteItem(item) {
-                console.log(`delete: ` + item.id);
+                if( window.confirm('Are you sure?') ) {
+                    this.$inertia.post('/books/' + item.id, {
+                        _method: 'DELETE'
+                    })
+                }
             }
         }
     }
@@ -51,6 +69,17 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
+
+                    <!-- flash message-->
+                    <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" 
+                         role="alert" 
+                         v-if="$page.props.flash.message">
+                        <div class="flex">
+                            <div>
+                                <p class="text-sm">{{ $page.props.flash.message }}</p>
+                            </div>
+                        </div>
+                    </div>
 
                     <button @click="openForm()" 
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Create</button>
@@ -72,10 +101,10 @@
                                 <td class="px-4 py-2 border">{{ item.title }}</td>
                                 <td class="px-4 py-2 border">{{ item.author }}</td>
                                 <td class="px-4 py-2 border"><!-- image --></td>
-                                <td class="px-4 py-2">
+                                <td class="px-4 py-2 border">
                                     <button @click="openForm(item)" 
                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-                                    <button @click="deleteForm(item)"
+                                    <button @click="deleteItem(item)"
                                             class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                                 </td>
                             </tr>
