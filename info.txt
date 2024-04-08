@@ -16,3 +16,6 @@ git remote add origin https://github.com/KovacsZoltan65/HQ_tailwind.git
 git push -u origin main
 
 php artisan make:model Book --all
+
+npm install filepond vue-filepond
+npm install filepond-plugin-file-poster filepond-plugin-file-validate-type filepond-plugin-image-preview
