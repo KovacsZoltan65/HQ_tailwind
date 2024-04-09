@@ -20,6 +20,10 @@
             }
         },
         methods: {
+            image_path(image){
+                //
+                return '/' + image;
+            },
             saveItem(item) {
                 let url = '/books';
 
@@ -44,7 +48,7 @@
             openForm(item) {
                 this.isFormOpen = true;
                 this.isFormEdit = !!item;
-                this.formObject = Object.assign({}, defaultFormObject, item);
+                this.formObject = item ? Object.assign( {}, item ) : defaultFormObject;
                 this.$page.props.errors = {};
             },
             // delete item
@@ -104,7 +108,9 @@
                                 <td class="px-4 py-2 border">{{ item.id }}</td>
                                 <td class="px-4 py-2 border">{{ item.title }}</td>
                                 <td class="px-4 py-2 border">{{ item.author }}</td>
-                                <td class="px-4 py-2 border"><!-- image --></td>
+                                <td class="px-4 py-2 border">
+                                    <img v-if="item.image" :src="image_path(item.image)" />
+                                </td>
                                 <td class="px-4 py-2 border">
                                     <!-- edit button -->
                                     <button @click="openForm(item)" 

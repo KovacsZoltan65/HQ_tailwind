@@ -30,6 +30,8 @@ Route::middleware([
     // ----------------------------------------
     // BOOKS
     // ----------------------------------------
+    Route::post('/upload-books', [BookController::class, 'upload'])->name('upload-books');
+    
     Route::resource('/books', BookController::class)->names([
         'index' => 'books'
     ]);
