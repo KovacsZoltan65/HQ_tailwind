@@ -35,18 +35,19 @@
                     }
                 });
             },
+            
+            // close modal
             closeModal() {
                 this.isFormOpen = false;
             },
-            openForm(item){
+            // open modal
+            openForm(item) {
                 this.isFormOpen = true;
                 this.isFormEdit = !!item;
-
-                //this.formObject =  item ? item : defaultFormObject;
-                this.formObject = {...defaultFormObject,...item};
-
+                this.formObject = Object.assign({}, defaultFormObject, item);
                 this.$page.props.errors = {};
             },
+            // delete item
             deleteItem(item) {
                 if( window.confirm('Are you sure?') ) {
                     this.$inertia.post('/books/' + item.id, {
@@ -59,13 +60,15 @@
 </script>
 
 <template>
-    <app-layout>
+    <app-layout title="Books">
+        
         <!-- header -->
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Books Kist
+                Books List
             </h2>
         </template>
+
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
@@ -81,6 +84,7 @@
                         </div>
                     </div>
 
+                    <!-- new button -->
                     <button @click="openForm()" 
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3">Create</button>
 
@@ -102,8 +106,11 @@
                                 <td class="px-4 py-2 border">{{ item.author }}</td>
                                 <td class="px-4 py-2 border"><!-- image --></td>
                                 <td class="px-4 py-2 border">
+                                    <!-- edit button -->
                                     <button @click="openForm(item)" 
                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
+                                            
+                                    <!-- delete button -->
                                     <button @click="deleteItem(item)"
                                             class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                                 </td>
@@ -111,8 +118,10 @@
                         </tbody>
                     </table>
 
-                    <pagination :links="data.links" ></pagination>
+                    <!-- pagination -->
+                    <pagination :links="data.links" />
 
+                    <!-- edit modal -->
                     <book-form :isOpen="isFormOpen" 
                                :isEdit="isFormEdit" 
                                :form="formObject" 
