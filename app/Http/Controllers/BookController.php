@@ -92,6 +92,18 @@ class BookController extends Controller
         return '';
     }
     
+    public function uploadRevert(Request $request) {
+        //
+        if( $image = $request->get('image') ) {
+            //
+            $path = storage_path('app/public/' . $image);
+            if( file_exists($path) ) {
+                //
+                unlink($path);
+            }
+        }
+    }
+
     protected function processImage(Request $request) {
         //
         if( $image = $request->get('image') ) {
@@ -104,4 +116,5 @@ class BookController extends Controller
             }
         }
     }
+
 }

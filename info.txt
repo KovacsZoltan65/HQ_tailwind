@@ -1,4 +1,5 @@
 https://www.youtube.com/watch?v=8shjc0Lc5xM&t=643s
+https://www.youtube.com/watch?v=XGtnWKujfow
 
 
 https://github.com/aloha202/laravel9_inertia_vue_crud
@@ -16,6 +17,7 @@ git remote add origin https://github.com/KovacsZoltan65/HQ_tailwind.git
 git push -u origin main
 
 php artisan make:model Book --all
+php artisan make:observer BookObserver --model=Book
 
 npm install filepond 
 npm install vue-filepond
