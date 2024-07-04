@@ -16,7 +16,17 @@ git remote add origin https://github.com/KovacsZoltan65/HQ_tailwind.git
 git push -u origin main
 
 php artisan make:model Book --all
+php artisan make:observer BookObserver --model=Book
 
+//-----------------------------
+// Fájl feltöltés
+//-----------------------------
+Szükséges könyvtárak:
+    átmeneti tárolóként használatos
+    storage/app/public/uploads/books
+    véglegesen itt tárolja a feltöltött képeket
+    public/uploads/books
+    
 npm install filepond 
 npm install vue-filepond
 

@@ -31,6 +31,7 @@ Route::middleware([
     // BOOKS
     // ----------------------------------------
     Route::post('/upload-books', [BookController::class, 'upload'])->name('upload-books');
+    Route::post('/upload-books-revert', [BookController::class, 'uploadRevert'])->name('upload-books-revert');
     
     Route::resource('/books', BookController::class)->names([
         'index' => 'books'
