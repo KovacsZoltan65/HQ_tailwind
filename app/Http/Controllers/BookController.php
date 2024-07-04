@@ -93,21 +93,17 @@ class BookController extends Controller
     }
     
     public function uploadRevert(Request $request) {
+        //
         if( $image = $request->get('image') ) {
+            //
             $path = storage_path('app/public/' . $image);
-
             if( file_exists($path) ) {
+                //
                 unlink($path);
             }
         }
     }
 
-    /**
-     * Process the image by copying it from the storage to the public folder and then deleting the original file.
-     *
-     * @param Request $request The HTTP request containing the image to process.
-     * @return void
-     */
     protected function processImage(Request $request) {
         //
         if( $image = $request->get('image') ) {

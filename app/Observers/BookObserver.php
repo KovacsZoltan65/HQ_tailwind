@@ -15,42 +15,42 @@ class BookObserver
     }
 
     /**
-     * Kezelje a KÃ¶nyv "frissÃ­tve" esemÃ©nyt.
+     * Kezelje a Könyv "frissítve" eseményt.
      *
-     * Ez a mÃ³dszer ellenÅ‘rzi, hogy a kÃ¶nyv kÃ©pe megvÃ¡ltozott-e, Ã©s ha igen,
-     * naplÃ³zza az esemÃ©nyt, Ã©s tÃ¶rli a rÃ©gi kÃ©pet, ha lÃ©tezik.
+     * Ez a módszer ellenõrzi, hogy a könyv képe megváltozott-e, és ha igen,
+     * naplózza az eseményt, és törli a régi képet, ha létezik.
      *
      * @param Book $book The book that was updated.
      * @return void
      */
     public function updated(Book $book): void
     {
-        // Szerezze meg a kÃ¶nyv jelenlegi Ã©s eredeti attribÃºtumait
+        // Szerezze meg a könyv jelenlegi és eredeti attribútumait
         $currentAttributes = $book->getAttributes();
         $originalAttributes = $book->getOriginalAttributes();
 
-        // EllenÅ‘rizze, hogy a kÃ©p megvÃ¡ltozott-e
+        // Ellenõrizze, hogy a kép megváltozott-e
         $imageChanged = $currentAttributes['image'] !== $originalAttributes['image'];
 
         if ($imageChanged) {
-            // EllenÅ‘rizze, hogy hozzÃ¡adtak-e Ãºj kÃ©pet
+            // Ellenõrizze, hogy hozzáadtak-e új képet
             $imageAdded = empty($originalAttributes['image']) && !empty($currentAttributes['image']);
 
-            // EllenÅ‘rizze, hogy a kÃ©pet tÃ¶rÃ¶ltÃ©k-e
+            // Ellenõrizze, hogy a képet törölték-e
             $imageDeleted = !empty($originalAttributes['image']) && empty($currentAttributes['image']);
 
             if ($imageAdded) {
-                // Ãšj kÃ©p hozzÃ¡adÃ¡sakor naplÃ³zza az esemÃ©nyt
-                \Log::info('KÃ©pet akarnak feltÃ¶lteni');
+                // Új kép hozzáadásakor naplózza az eseményt
+                \Log::info('Képet akarnak feltölteni');
             } elseif ($imageDeleted) {
-                // A kÃ©p tÃ¶rlÃ©sekor naplÃ³zza az esemÃ©nyt
-                \Log::info('TÃ¶rÃ¶ltÃ©k a feltÃ¶ltÃ¶tt kÃ©pet');
-                // TÃ¶rÃ¶lje a rÃ©gi kÃ©pet
+                // A kép törlésekor naplózza az eseményt
+                \Log::info('Törölték a feltöltött képet');
+                // Törölje a régi képet
                 unlink(public_path($originalAttributes['image']));
             } else {
-                // A kÃ©p frissÃ­tÃ©sekor naplÃ³zza az esemÃ©nyt
-                \Log::info('MegvÃ¡ltoztattÃ¡k a kÃ©pet');
-                // TÃ¶rÃ¶lje a rÃ©gi kÃ©pet
+                // A kép frissítésekor naplózza az eseményt
+                \Log::info('Megváltoztatták a képet');
+                // Törölje a régi képet
                 unlink(public_path($originalAttributes['image']));
             }
         }
